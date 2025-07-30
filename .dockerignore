@@ -1,0 +1,8 @@
+/vendor
+**/.git
+**/.DS_Store
+
+.git
+
+*.env
+db-data
