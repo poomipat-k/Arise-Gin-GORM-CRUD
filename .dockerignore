@@ -6,6 +6,6 @@
 
 .env
 *.env
-db-data
+./backend/db-data
 
 tmp
