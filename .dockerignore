@@ -4,5 +4,8 @@
 
 .git
 
-*.env
-db-data
+.env
+
+./backend/db-data
+
+tmp
