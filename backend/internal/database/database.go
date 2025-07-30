@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/poomipat-k/crud-arise/internal/config"
+	"github.com/poomipat-k/crud-arise/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -16,7 +17,7 @@ func DB() *gorm.DB {
 }
 
 func AutoMigrate() {
-	// DB().AutoMigrate()
+	DB().AutoMigrate(&models.Item{})
 }
 
 func InitDB() {
