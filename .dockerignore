@@ -5,7 +5,7 @@
 .git
 
 .env
-*.env
+
 ./backend/db-data
 
 tmp
