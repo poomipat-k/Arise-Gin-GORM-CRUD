@@ -7,5 +7,5 @@ import (
 )
 
 func HelloWorld(c *gin.Context) {
-	c.JSON(http.StatusOK, "Hello world25!")
+	c.JSON(http.StatusOK, "Hello world3!")
 }
