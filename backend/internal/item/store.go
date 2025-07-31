@@ -44,3 +44,12 @@ func (s *store) DeleteItemById(id uint) error {
 	}
 	return s.db.Delete(&models.Item{}, id).Error
 }
+
+func (s *store) UpdateItemById(id uint, input schemas.UpdateItemSchemaInput) error {
+	var item models.Item
+	if err := s.db.First(&item, id).Error; err != nil {
+		return err
+	}
+	item.Name = input.Name
+	return s.db.Save(&item).Error
+}
