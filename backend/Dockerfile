@@ -10,7 +10,7 @@ RUN go install github.com/air-verse/air@latest
 WORKDIR /app
 
 # Copy go.mod and go.sum files
-COPY go.mod go.sum ./
+COPY ./backend/go.mod ./backend/go.sum ./
 
 # Download all dependencies
 RUN go mod download
