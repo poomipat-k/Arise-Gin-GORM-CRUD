@@ -28,3 +28,11 @@ func (s *store) CreateItem(input schemas.CreateItemSchemaInput) (*models.Item, e
 	}
 	return &newItem, nil
 }
+
+func (s *store) GetItemById(id uint) (models.Item, error) {
+	var item models.Item
+	if err := s.db.First(&item, id).Error; err != nil {
+		return item, err
+	}
+	return item, nil
+}

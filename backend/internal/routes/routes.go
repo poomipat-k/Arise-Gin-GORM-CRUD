@@ -11,5 +11,7 @@ func RegisterRoutes(router *gin.Engine) {
 	// Hello world
 	itemStore := item.NewItemStore(database.DB())
 	itemHandler := item.NewItemHandler(itemStore)
+
 	router.POST("/items", itemHandler.CreateItem)
+	router.GET("/items/:id", itemHandler.GetItemById)
 }

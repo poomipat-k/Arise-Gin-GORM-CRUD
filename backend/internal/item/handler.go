@@ -2,6 +2,7 @@ package item
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/poomipat-k/crud-arise/internal/models"
@@ -10,6 +11,7 @@ import (
 
 type ItemStore interface {
 	CreateItem(input schemas.CreateItemSchemaInput) (*models.Item, error)
+	GetItemById(id uint) (models.Item, error)
 }
 
 type ItemHandler struct {
@@ -38,4 +40,21 @@ func (h *ItemHandler) CreateItem(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"status": "Item created", "id": item.ID})
+}
+
+func (h *ItemHandler) GetItemById(c *gin.Context) {
+	idStr := c.Param("id")
+	itemId, err := strconv.Atoi(idStr)
+	if err != nil || itemId <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid item ID"})
+		return
+	}
+
+	item, err := h.store.GetItemById(uint(itemId))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "item not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, item)
 }
