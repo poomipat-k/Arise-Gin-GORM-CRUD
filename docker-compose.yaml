@@ -10,7 +10,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - todo_postgres
+      todo_postgres:
+        condition: service_healthy
     volumes:
       - ./backend/:/app #mount volume for Air
 
@@ -22,5 +23,10 @@ services:
     restart: always
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - ./backend/db-data/postgres/:/var/lib/postgresql/data/
