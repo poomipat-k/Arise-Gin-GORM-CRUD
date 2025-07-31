@@ -14,4 +14,5 @@ func RegisterRoutes(router *gin.Engine) {
 
 	router.POST("/items", itemHandler.CreateItem)
 	router.GET("/items/:id", itemHandler.GetItemById)
+	router.DELETE("/items/:id", itemHandler.DeleteItemById)
 }

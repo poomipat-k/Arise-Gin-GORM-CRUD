@@ -39,7 +39,7 @@ func (h *ItemHandler) CreateItem(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "Item created", "id": item.ID})
+	c.JSON(http.StatusOK, gin.H{"message": "Item created", "id": item.ID})
 }
 
 func (h *ItemHandler) GetItemById(c *gin.Context) {
@@ -57,4 +57,8 @@ func (h *ItemHandler) GetItemById(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, item)
+}
+
+func (h *ItemHandler) DeleteItemById(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"message": "Item deleted"})
 }
