@@ -9,7 +9,7 @@ import (
 )
 
 type ItemStore interface {
-	AddItem(input schemas.CreateItemSchemaInput) (*models.Item, error)
+	CreateItem(input schemas.CreateItemSchemaInput) (*models.Item, error)
 }
 
 type ItemHandler struct {
@@ -27,11 +27,11 @@ func (h *ItemHandler) CreateItem(c *gin.Context) {
 
 	// Validation
 	if err := c.BindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid input"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid input", "errorDetails": err.Error()})
 		return
 	}
 
-	item, err := h.store.AddItem(input)
+	item, err := h.store.CreateItem(input)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

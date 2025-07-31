@@ -10,7 +10,7 @@ import (
 
 type Item struct {
 	ID        uint           `gorm:"primaryKey" json:"id"`
-	Name      string         `json:"name" example:"Sample Item"`
+	Name      string         `json:"name"`
 	CreatedAt time.Time      `json:"createdAt"`
 	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `json:"deletedAt,omitempty"`

@@ -18,7 +18,7 @@ func NewItemStore(db *gorm.DB) *store {
 	}
 }
 
-func (s *store) AddItem(input schemas.CreateItemSchemaInput) (*models.Item, error) {
+func (s *store) CreateItem(input schemas.CreateItemSchemaInput) (*models.Item, error) {
 	newItem := models.Item{
 		Name: input.Name,
 	}
