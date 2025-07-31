@@ -16,7 +16,7 @@ A Go-based RESTful CRUD application for managing to-do list.
 
 Ensure you have the following installed:
 
-[Go](https://go.dev/doc/install)
+[Go](https://go.dev/doc/install) Version 1.23 or higher
 
 [Docker](https://docs.docker.com/engine/install/)
 
@@ -28,7 +28,7 @@ Clone the repository:
 
 ```sh
 git clone git@github.com:poomipat-k/Arise-Gin-GORM-CRUD.git
-cd running-fund
+cd Arise-Gin-GORM-CRUD
 ```
 
 Copy the example environment variables:

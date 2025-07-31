@@ -19,7 +19,7 @@ services:
     container_name: todo_postgres
     ports:
       - "5432:5432"
-    restart: no
+    restart: always
     env_file:
       - .env
     volumes:
