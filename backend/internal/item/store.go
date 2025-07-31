@@ -1,0 +1,55 @@
+package item
+
+import (
+	"fmt"
+
+	"github.com/poomipat-k/crud-arise/internal/models"
+	"github.com/poomipat-k/crud-arise/internal/schemas"
+	"gorm.io/gorm"
+)
+
+type store struct {
+	db *gorm.DB
+}
+
+func NewItemStore(db *gorm.DB) *store {
+	return &store{
+		db: db,
+	}
+}
+
+func (s *store) CreateItem(input schemas.CreateItemSchemaInput) (*models.Item, error) {
+	newItem := models.Item{
+		Name: input.Name,
+	}
+
+	if err := s.db.Create(&newItem).Error; err != nil {
+		return nil, fmt.Errorf("error creating user: %v", err)
+	}
+	return &newItem, nil
+}
+
+func (s *store) GetItemById(id uint) (models.Item, error) {
+	var item models.Item
+	if err := s.db.First(&item, id).Error; err != nil {
+		return item, err
+	}
+	return item, nil
+}
+
+func (s *store) DeleteItemById(id uint) error {
+	_, err := s.GetItemById(id)
+	if err != nil {
+		return err
+	}
+	return s.db.Delete(&models.Item{}, id).Error
+}
+
+func (s *store) UpdateItemById(id uint, input schemas.UpdateItemSchemaInput) error {
+	var item models.Item
+	if err := s.db.First(&item, id).Error; err != nil {
+		return err
+	}
+	item.Name = input.Name
+	return s.db.Save(&item).Error
+}

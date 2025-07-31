@@ -15,7 +15,7 @@ func main() {
 	database.InitDB()
 
 	// Auto-migrate the database schema
-	// database.AutoMigrate()
+	database.AutoMigrate()
 
 	r := gin.Default()
 
