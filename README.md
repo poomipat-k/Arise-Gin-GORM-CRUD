@@ -28,7 +28,6 @@ Clone the repository:
 
 ```sh
 git clone git@github.com:poomipat-k/Arise-Gin-GORM-CRUD.git
-cd Arise-Gin-GORM-CRUD
 ```
 
 Copy the example environment variables:

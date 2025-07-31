@@ -1,0 +1,7 @@
+    # Example .air.toml for Go
+    root = "."
+    tmp_dir = "../app_bin" # so the binary won't be copied to our local repo due to mounted volume (- ./backend/:/app) in docker compose
+
+    [build]
+    cmd = "go build -o ../app_bin/main ."
+    bin = "../app_bin/main"
