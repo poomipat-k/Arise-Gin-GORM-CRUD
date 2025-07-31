@@ -36,3 +36,11 @@ func (s *store) GetItemById(id uint) (models.Item, error) {
 	}
 	return item, nil
 }
+
+func (s *store) DeleteItemById(id uint) error {
+	_, err := s.GetItemById(id)
+	if err != nil {
+		return err
+	}
+	return s.db.Delete(&models.Item{}, id).Error
+}

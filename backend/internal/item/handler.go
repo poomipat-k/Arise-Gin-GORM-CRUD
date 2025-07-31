@@ -12,6 +12,7 @@ import (
 type ItemStore interface {
 	CreateItem(input schemas.CreateItemSchemaInput) (*models.Item, error)
 	GetItemById(id uint) (models.Item, error)
+	DeleteItemById(id uint) error
 }
 
 type ItemHandler struct {
@@ -60,5 +61,18 @@ func (h *ItemHandler) GetItemById(c *gin.Context) {
 }
 
 func (h *ItemHandler) DeleteItemById(c *gin.Context) {
+	idStr := c.Param("id")
+	itemId, err := strconv.Atoi(idStr)
+	if err != nil || itemId <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid item ID"})
+		return
+	}
+
+	err = h.store.DeleteItemById(uint(itemId))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "item not found"})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{"message": "Item deleted"})
 }

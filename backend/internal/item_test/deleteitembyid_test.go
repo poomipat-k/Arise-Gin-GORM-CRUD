@@ -1,6 +1,7 @@
 package itemtest
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -20,9 +21,39 @@ func TestDeleteItemById(t *testing.T) {
 		expectedStatus int
 	}{
 		{
+			testName:       "should error when id is invalid (string)",
+			itemId:         "abc",
+			expectedStatus: http.StatusBadRequest,
+		},
+		{
+			testName:       "should error when id is invalid (negative)",
+			itemId:         -10,
+			expectedStatus: http.StatusBadRequest,
+		},
+		{
+			testName:       "should error when id is invalid (float)",
+			itemId:         2.35,
+			expectedStatus: http.StatusBadRequest,
+		},
+		{
+			testName:       "should error when item is not exist",
+			itemId:         1000,
+			expectedStatus: http.StatusNotFound,
+			store: &MockItemStore{
+				DeleteItemByIdFunc: func(id uint) error {
+					return errors.New("item not found")
+				},
+			},
+		},
+		{
 			testName:       "should delete item successfully",
-			itemId:         5,
+			itemId:         1,
 			expectedStatus: http.StatusOK,
+			store: &MockItemStore{
+				DeleteItemByIdFunc: func(id uint) error {
+					return nil
+				},
+			},
 		},
 	}
 
@@ -40,7 +71,6 @@ func TestDeleteItemById(t *testing.T) {
 
 			r.DELETE("/items/:id", itemHandler.DeleteItemById)
 			r.ServeHTTP(res, c.Request)
-			t.Log(res)
 
 			if status := res.Code; status != tt.expectedStatus {
 				t.Errorf("handler returned wrong status code: got %v want %v", status, tt.expectedStatus)
